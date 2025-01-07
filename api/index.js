@@ -24,7 +24,7 @@ let products;
     }
 })();
 
-app.get('api/products', async (req, res) => {
+app.get('/api/products', async (req, res) => {
     try {
         const { page = 1, limit = 16 } = req.query;
 
@@ -43,7 +43,7 @@ app.get('api/products', async (req, res) => {
 });
 
 
-app.get('api/products/:id', async (req, res) => {
+app.get('/api/products/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
