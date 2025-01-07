@@ -11,7 +11,15 @@ const MONGO_URI = process.env.MONGODB_URI;
 let db = Db;
 let products;
 
+
 (async function connectToDB() {
+    if (!MONGO_URI) {
+        console.error('MONGO_URI is not defined!');
+        throw new Error('MONGO_URI is missing');
+    } else {
+        console.log('MONGO_URI:', MONGO_URI);
+    }
+
     try {
         const client = new MongoClient(MONGO_URI);
         await client.connect();
