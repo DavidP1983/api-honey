@@ -56,6 +56,7 @@ app.get('/api/products/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
+        if (!products) await connectToDB()
         // Проверяем валидность идентификатора
         if (!ObjectID.isValid(id)) {
             return res.status(400).json({ error: 'Invalid ID format' });
