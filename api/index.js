@@ -8,20 +8,15 @@ require('dotenv').config();
 const app = express();
 const MONGO_URI = process.env.MONGODB_URI;
 
-let db = Db;
+let db;
+let client;
 let products;
 
 
 (async function connectToDB() {
-    if (!MONGO_URI) {
-        console.error('MONGO_URI is not defined!');
-        throw new Error('MONGO_URI is missing');
-    } else {
-        console.log('MONGO_URI:', MONGO_URI);
-    }
 
     try {
-        const client = new MongoClient(MONGO_URI);
+        client = new MongoClient(MONGO_URI);
         await client.connect();
         db = client.db('honey');
         products = db.collection('allproducts');
@@ -31,6 +26,13 @@ let products;
         process.exit(1);
     }
 })();
+
+app.listen(process.env.PORT, (error) => {
+    error ? console.log(error) : console.log(`listening port ${process.env.PORT}`);
+});
+
+app.use(express.urlencoded({ extended: false }));
+
 
 app.get('/api/products', async (req, res) => {
     try {
@@ -49,7 +51,6 @@ app.get('/api/products', async (req, res) => {
         res.status(500).json({ error: `Failed to fetch products: ${error.message}` });
     }
 });
-
 
 app.get('/api/products/:id', async (req, res) => {
     const { id } = req.params;
@@ -78,6 +79,3 @@ app.get('/api/products/:id', async (req, res) => {
     }
 });
 
-app.listen(process.env.PORT, (error) => {
-    error ? console.log(error) : console.log(`listening port ${process.env.PORT}`);
-});
