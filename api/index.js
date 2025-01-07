@@ -6,17 +6,16 @@ var Db = require('mongodb').Db,
 require('dotenv').config();
 
 const app = express();
-const MONGO_URI = process.env.MONGODB_URI;
+// const MONGO_URI = process.env.MONGODB_URI;
 
 let db;
 let client;
 let products;
 
 
-(async function connectToDB() {
-
+async function connectToDB() {
     try {
-        client = new MongoClient(MONGO_URI);
+        client = new MongoClient(process.env.MONGODB_URI, {});
         await client.connect();
         db = client.db('honey');
         products = db.collection('allproducts');
@@ -25,7 +24,7 @@ let products;
         console.error('Failed to connect to MongoDB:', error);
         process.exit(1);
     }
-})();
+};
 
 app.listen(process.env.PORT, (error) => {
     error ? console.log(error) : console.log(`listening port ${process.env.PORT}`);
@@ -36,10 +35,11 @@ app.use(express.urlencoded({ extended: false }));
 
 app.get('/api/products', async (req, res) => {
     try {
+        if (!products) await connectToDB()
         const { page = 1, limit = 16 } = req.query;
 
         const skip = (page - 1) * limit;
-
+        console.log(products)
         const result = await products
             .find({})
             .limit(parseInt(limit))
