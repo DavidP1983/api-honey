@@ -1,16 +1,21 @@
 const express = require('express');
-var Db = require('mongodb').Db,
-    MongoClient = require('mongodb').MongoClient,
-    ObjectID = require('mongodb').ObjectId;
+const MongoClient = require('mongodb').MongoClient;
+const ObjectID = require('mongodb').ObjectId;
+const cors = require('cors');
 
 require('dotenv').config();
 
 const app = express();
-// const MONGO_URI = process.env.MONGODB_URI;
 
 let db;
 let client;
 let products;
+
+const corsOptions = {
+    origin: ['http://localhost:3000'],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
 
 async function connectToDB() {
@@ -31,7 +36,7 @@ app.listen(process.env.PORT, (error) => {
 });
 
 app.use(express.urlencoded({ extended: false }));
-
+app.use(cors(corsOptions));
 
 app.get('/api/products', async (req, res) => {
     try {
