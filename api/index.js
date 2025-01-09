@@ -87,7 +87,7 @@ app.get('/api/products/:id', async (req, res) => {
 
 app.post('/api/products/:id/reviews', async (req, res) => {
     const { id } = req.params;
-    const { name, city, comment, rating, title, date } = req.body;
+    const { name, city, comment, rating, title } = req.body;
 
     try {
         if (!products) await connectToDB();
@@ -105,7 +105,7 @@ app.post('/api/products/:id/reviews', async (req, res) => {
             comment: comment || '',
             rating: rating || '0',
             title: title || '',
-            data: date || '',
+            date: new Date().toISOString(),
         };
 
         const result = await products.updateOne(
