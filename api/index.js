@@ -85,3 +85,43 @@ app.get('/api/products/:id', async (req, res) => {
     }
 });
 
+app.post('/api/products/:id/reviews', async (req, res) => {
+    const { id } = req.params;
+    const { name, city, comment, rating, title, date } = req.body;
+
+    try {
+        if (!products) await connectToDB();
+
+        if (!ObjectID.isValid(id)) {
+            return res.status(400).json({ error: 'Invalid ID format' });
+        }
+
+        const objectId = new ObjectID(id);
+
+        const newReview = {
+            id: new ObjectID().toString(),
+            name: name || '',
+            city: city || '',
+            comment: comment || '',
+            rating: rating || '0',
+            title: title || '',
+            data: date || '',
+        };
+
+        const result = await products.updateOne(
+            { _id: objectId },
+            { $push: { reviews: newReview } }
+        );
+
+        if (result.modifiedCount === 0) {
+            return res.status(404).json({ error: 'Product not found or not updated' });
+        }
+
+        return res.status(200).json({ message: 'Review added successfully', review: newReview });
+    } catch (error) {
+        console.error('Error adding review:', error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
