@@ -98,8 +98,18 @@ app.post('/api/products/:id/reviews', async (req, res) => {
         }
 
         const objectId = new ObjectID(id);
-        const localDate = new Date();
-        const isoLocalDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
+
+        function getLocalISODate() {
+            const localDate = new Date();
+            const offset = -localDate.getTimezoneOffset();
+            const sign = offset >= 0 ? '+' : '-';
+            const pad = (num) => String(num).padStart(2, '0');
+            const hours = pad(Math.floor(Math.abs(offset) / 60));
+            const minutes = pad(Math.abs(offset) % 60);
+            return localDate.toISOString().slice(0, 19) + `${sign}${hours}:${minutes}`;
+        }
+
+        const isoWithTimezone = getLocalISODate();
 
 
         const newReview = {
@@ -109,7 +119,7 @@ app.post('/api/products/:id/reviews', async (req, res) => {
             comment: comment || '',
             rating: rating || '0',
             title: title || '',
-            date: isoLocalDate,
+            date: isoWithTimezone,
         };
 
         const result = await products.updateOne(
