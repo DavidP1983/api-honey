@@ -98,6 +98,9 @@ app.post('/api/products/:id/reviews', async (req, res) => {
         }
 
         const objectId = new ObjectID(id);
+        const localDate = new Date();
+        const isoLocalDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
+
 
         const newReview = {
             id: new ObjectID().toString(),
@@ -106,7 +109,7 @@ app.post('/api/products/:id/reviews', async (req, res) => {
             comment: comment || '',
             rating: rating || '0',
             title: title || '',
-            date: new Date().toISOString(),
+            date: isoLocalDate,
         };
 
         const result = await products.updateOne(
