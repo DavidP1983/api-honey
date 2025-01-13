@@ -97,15 +97,18 @@ app.post('/api/products/:id/reviews', async (req, res) => {
             return res.status(400).json({ error: 'Invalid ID format' });
         }
 
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
         const objectId = new ObjectID(id);
         const localDate = new Date();
         const isoLocalDate = new Date(localDate.getTime() - localDate.getTimezoneOffset() * 60000).toISOString();
 
-
         const newReview = {
             id: new ObjectID().toString(),
-            name: name || '',
-            city: city || '',
+            name: capitalizeFirstLetter(name) || '',
+            city: capitalizeFirstLetter(city) || '',
             comment: comment || '',
             rating: rating || '0',
             title: title || '',
