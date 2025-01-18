@@ -12,7 +12,7 @@ let client;
 let products;
 
 const corsOptions = {
-    origin: ['http://localhost:3000'],
+    origin: ['https://bienenhonig.vercel.app'],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
