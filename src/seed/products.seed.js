@@ -26,7 +26,14 @@ const products = [
             origin: 'Erkrath-Hochdahl',
             text: 'Wildflower honey made from the nectar of various flowering plants. It has a rich floral aroma, a naturally sweet taste, and a flavour that reflects the diversity of seasonal blossoms. Its colour and texture may vary depending on the harvest and natural crystallisation.',
         },
-        images: ['/images/Honey/honey.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'honey_vjmnw6',
+                format: 'png',
+                alt: 'Wildflower Honey',
+            },
+        ],
         variants: [
             {
                 size: '250 g',
@@ -75,7 +82,14 @@ const products = [
             origin: 'Düsseldorf',
             text: 'Spring blossom honey with a delicate floral aroma and a light, sweet flavour. Collected during the spring flowering season, it offers a gentle taste that pairs well with tea, yoghurt, fresh fruit, and breakfast dishes.',
         },
-        images: ['/images/Honey/honey2.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'honey2_bcfuic',
+                format: 'png',
+                alt: 'Spring Blossom Honey',
+            },
+        ],
         variants: [
             {
                 size: '250 g',
@@ -123,7 +137,14 @@ const products = [
             origin: 'Düsseldorf',
             text: 'Linden honey is known for its distinctive floral aroma and refreshing herbal notes. Its balanced sweetness makes it a lovely addition to warm drinks, toast, and everyday meals. Colour and consistency can change naturally over time.',
         },
-        images: ['/images/Honey/honey3.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'honey3_bjtatb',
+                format: 'png',
+                alt: 'Linden',
+            },
+        ],
         variants: [
             {
                 size: '250 g',
@@ -165,7 +186,14 @@ const products = [
             origin: 'Erkrath',
             text: 'Creamed honey has a smooth, spreadable consistency created through controlled crystallisation. Its fine texture makes it easy to spread on bread, pancakes, and pastries without dripping. It offers the familiar sweetness of honey in a creamy form.',
         },
-        images: ['/images/Honey Products/products.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'products_cu4m6d',
+                format: 'png',
+                alt: 'Honey Cream',
+            },
+        ],
         variants: [
             {
                 size: '250 g',
@@ -217,7 +245,14 @@ const products = [
             origin: 'Düsseldorf',
             text: 'A honey gift box presented for special occasions and thoughtful everyday gifts. It is a lovely choice for honey lovers, family celebrations, and seasonal surprises. Check the product images and available variants for the exact contents of the box.',
         },
-        images: ['/images/Honey Products/products2.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'products2_f4l7y7',
+                format: 'png',
+                alt: 'Honey Gift Box',
+            },
+        ],
         variants: [
             {
                 size: '500 g',
@@ -262,7 +297,14 @@ const products = [
             origin: 'Erkrath',
             text: 'Natural beeswax is a versatile material produced by honeybees. It can be used for candle making, wax wraps, crafts, and a variety of beekeeping projects. Natural colour and texture may vary between batches.',
         },
-        images: ['/images/Bee Products/beeProducts.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'beeProducts_edss61',
+                format: 'png',
+                alt: 'Natural Beeswax',
+            },
+        ],
         variants: [
             {
                 size: '100 g',
@@ -318,7 +360,14 @@ const products = [
             origin: 'Düsseldorf',
             text: 'Propolis is a resinous substance that honeybees collect from plants and use within the hive. It has a characteristic aroma and a naturally variable colour. Check the product label for ingredients, intended use, and storage instructions.',
         },
-        images: ['/images/Bee Products/beeProducts2.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'beeProducts2_rjox7j',
+                format: 'png',
+                alt: 'Pure Propolis',
+            },
+        ],
         variants: [
             {
                 size: '50 g',
@@ -363,7 +412,14 @@ const products = [
             origin: 'Erkrath',
             text: 'A wooden bee frame designed to support the organisation of a beehive. It provides a structure for bees to build comb and is a practical component of beekeeping equipment. Check the product dimensions to ensure compatibility with your hive.',
         },
-        images: ['/images/Beekeeping/beekeeping.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'beekeeping1_mlpk0r',
+                format: 'png',
+                alt: 'Wooden Bee Frame',
+            },
+        ],
         variants: [
             {
                 size: '300 mm',
@@ -411,7 +467,14 @@ const products = [
             origin: 'Düsseldorf',
             text: 'A bee smoker designed to produce smoke for use during hive inspections. When operated correctly, smoke can help beekeepers manage colonies more calmly during routine work. Follow the manufacturer’s instructions and all relevant fire-safety precautions.',
         },
-        images: ['/images/Beekeeping/beekeeping2.png'],
+        images: [
+            {
+                provider: 'cloudinary',
+                publicId: 'beekeeping_lz12em',
+                format: 'png',
+                alt: 'Bee Smoker',
+            },
+        ],
         variants: [
             {
                 size: 'Small',

@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import { ObjectId } from 'mongodb';
 import { createHash } from 'node:crypto';
 import { COLLECTIONS } from '../config/collections.js';
@@ -7,7 +6,6 @@ import { createOrder } from '../repositories/orders.repository.js';
 import { orderCalculations } from '../utils/order-calculations.js';
 import { roundMoney } from '../utils/roundMoney.js';
 import { sendOrderEmails } from './order-email.service.js';
-dotenv.config();
 
 export const createOrderService = async ({
     customer,
@@ -120,7 +118,7 @@ export const createOrderService = async ({
         orderItems.push({
             productId: product._id,
             title: product.title,
-            image: product.images?.[0] ?? '',
+            image: product.images?.[0] ?? null,
             sellerId: product.sellerId,
             sellerName: product.sellerName,
             sellerEmail: product.sellerEmail,

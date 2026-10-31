@@ -34,8 +34,14 @@ export const productSchema = z.object({
         text: z.string(),
     }),
 
-    images: z.array(z.string()),
-
+    images: z.array(
+        z.object({
+            provider: z.literal('cloudinary'),
+            publicId: z.string(),
+            format: z.string(),
+            alt: z.string().optional(),
+        }),
+    ),
     variants: z.array(
         z.object({
             size: z.string().min(1),

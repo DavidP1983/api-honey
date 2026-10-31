@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+import { getImageUrl } from '../../utils/getImageUrl.js';
+dotenv.config();
+
 export function getSellerOrderTemplateData(order, sellerOrder) {
     return {
         seller: {
@@ -26,9 +30,9 @@ export function getSellerOrderTemplateData(order, sellerOrder) {
         },
         items: sellerOrder.items.map((item) => ({
             title: item.title,
-            image: item.image
-                ? `${process.env.FRONTEND_URL}${item.image}`
-                : `${process.env.FRONTEND_URL}/images/placeholder-image.jpg`,
+            image:
+                getImageUrl(item.image, 200) ??
+                `${process.env.FRONTEND_URL}/images/placeholder-image.jpg`,
             size: item.size,
             quantity: item.quantity,
             unitPrice: item.unitPrice,

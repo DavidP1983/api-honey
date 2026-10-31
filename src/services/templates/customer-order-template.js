@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import { getImageUrl } from '../../utils/getImageUrl.js';
 dotenv.config();
 
 export function getCustomerOrderTemplateData(order) {
@@ -27,7 +28,7 @@ export function getCustomerOrderTemplateData(order) {
             sellerName: item.sellerName,
             sellerEmail: item.sellerEmail,
             image:
-                `${process.env.FRONTEND_URL}${item.image}` ||
+                getImageUrl(item.image, 200) ??
                 `${process.env.FRONTEND_URL}/images/placeholder-image.jpg`,
             size: item.size,
             quantity: item.quantity,
