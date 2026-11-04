@@ -18,7 +18,20 @@ clientPromise.then(
         console.log('MongoDB connected successfully');
     },
     (error) => {
-        console.error('MongoDB connection failed:', error);
+        console.error('MongoDB connection failed:', error.message);
+
+        const servers = error.reason?.servers;
+
+        if (servers) {
+            for (const [address, server] of servers) {
+                console.error('MongoDB server details:', {
+                    address,
+                    type: server.type,
+                    error: server.error?.message,
+                    code: server.error?.code,
+                });
+            }
+        }
     },
 );
 if (process.env.NODE_ENV !== 'production') {
