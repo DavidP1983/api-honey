@@ -1,3 +1,4 @@
+import { redis } from '../config/redis.js';
 import { reviewSchema } from '../schemas/review.schema.js';
 import {
     createReview,
@@ -72,6 +73,17 @@ export const postReview = async (req, res) => {
         }
 
         const review = await createReview(result.data);
+
+        try {
+            await Promise.all([
+                redis.del('reviews:ratings:summary'),
+                redis.incr(
+                    `reviews:product:${review.productId}:version`,
+                ) /* Создаем у увеличиваем версирование */,
+            ]);
+        } catch (e) {
+            console.error('Review cache invalidation error:', error);
+        }
 
         return res.status(201).json(review);
     } catch (error) {

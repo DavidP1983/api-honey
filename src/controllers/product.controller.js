@@ -7,8 +7,15 @@ import {
 
 const getProducts = async (req, res) => {
     try {
-        const { page = 1, limit = 16 } = req.query;
-        const products = await fetchProducts(Number(page), Number(limit));
+        const { page, limit } = req.query;
+
+        let products;
+
+        if (page !== undefined && limit !== undefined) {
+            products = await fetchProducts(Number(page), Number(limit));
+        } else {
+            products = await fetchProducts();
+        }
 
         res.status(200).json(products);
     } catch (error) {

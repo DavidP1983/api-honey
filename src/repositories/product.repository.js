@@ -2,16 +2,21 @@ import { ObjectId } from 'mongodb';
 import { COLLECTIONS } from '../config/collections.js';
 import { getDatabase } from '../config/mongodb.js';
 
-const getProducts = async (page = 1, limit = 16) => {
+const getProducts = async (page, limit) => {
     const db = await getDatabase();
 
-    const skip = (page - 1) * limit;
-    return db
+    const query = db
         .collection(COLLECTIONS.PRODUCTS)
         .find({})
-        .skip(skip)
-        .limit(limit)
-        .toArray();
+        .sort({ createdAt: -1 });
+
+    if (page !== undefined && limit !== undefined) {
+        const skip = (page - 1) * limit;
+
+        query.skip(skip).limit(limit);
+    }
+
+    return query.toArray();
 };
 
 const getProductById = async (id) => {
