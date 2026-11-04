@@ -13,9 +13,14 @@ console.log('MongoDB connection attempt');
 const clientPromise =
     globalWithMongo.mongoClientPromise ?? new MongoClient(uri).connect();
 
-clientPromise.then(() => {
-    console.log('MongoDB connected successfully');
-});
+clientPromise.then(
+    () => {
+        console.log('MongoDB connected successfully');
+    },
+    (error) => {
+        console.error('MongoDB connection failed:', error);
+    },
+);
 if (process.env.NODE_ENV !== 'production') {
     globalWithMongo.mongoClientPromise = clientPromise;
 }
