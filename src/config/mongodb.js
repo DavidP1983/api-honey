@@ -9,9 +9,13 @@ if (!uri) {
 }
 const globalWithMongo = globalThis;
 
+console.log('MongoDB connection attempt');
 const clientPromise =
     globalWithMongo.mongoClientPromise ?? new MongoClient(uri).connect();
 
+clientPromise.then(() => {
+    console.log('MongoDB connected successfully');
+});
 if (process.env.NODE_ENV !== 'production') {
     globalWithMongo.mongoClientPromise = clientPromise;
 }
