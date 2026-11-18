@@ -1,7 +1,9 @@
 import { ObjectId } from 'mongodb';
+import { toWishlistProductDto } from '../dtos/productWishlist.dto.js';
 import {
     fetchProductById,
     fetchProducts,
+    fetchProductsByIds,
     fetchRelatedProducts,
 } from '../services/product.service.js';
 
@@ -84,6 +86,43 @@ const getProductById = async (req, res) => {
     }
 };
 
+const getProductsByIds = async (req, res) => {
+    try {
+        const { productIds } = req.body;
+
+        if (!Array.isArray(productIds) || productIds.length === 0) {
+            return res.status(400).json({
+                code: 'PRODUCTS_NOT_SELECTED',
+                message: 'Please select at least one product.',
+            });
+        }
+
+        const isValidIds = productIds.every(
+            (id) => typeof id === 'string' && ObjectId.isValid(id),
+        );
+
+        if (!isValidIds) {
+            return res.status(400).json({
+                code: 'INVALID_PRODUCT_IDS',
+                message: 'Some selected products could not be found.',
+            });
+        }
+
+        const products = await fetchProductsByIds(productIds);
+
+        const wishlistProducts = products.map(toWishlistProductDto);
+
+        return res.status(200).json(wishlistProducts);
+    } catch (error) {
+        console.error('Get products by IDs error:', error);
+
+        return res.status(500).json({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to fetch wishlist products',
+        });
+    }
+};
+
 const getRelatedProducts = async (req, res) => {
     try {
         const { id } = req.params;
@@ -116,4 +155,4 @@ const getRelatedProducts = async (req, res) => {
     }
 };
 
-export { getProductById, getProducts, getRelatedProducts };
+export { getProductById, getProducts, getProductsByIds, getRelatedProducts };

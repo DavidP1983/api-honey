@@ -3,6 +3,7 @@ import { getBestSeller } from '../controllers/getBestSellerProductIds.controller
 import {
     getProductById,
     getProducts,
+    getProductsByIds,
     getRelatedProducts,
 } from '../controllers/product.controller.js';
 import { cacheResponse } from '../middlewares/cache.middleware.js';
@@ -45,6 +46,8 @@ router.get(
     }, 600),
     getProductById,
 );
+
+router.post('/products/wishlist', getProductsByIds);
 
 router.get('/products/:id/related', getRelatedProducts);
 

@@ -27,6 +27,21 @@ const getProductById = async (id) => {
         .findOne({ _id: new ObjectId(id) });
 };
 
+/* Запрос для Wish List */
+export const getProductsByIds = async (productIds) => {
+    const db = await getDatabase();
+
+    const objectIds = productIds.map((id) => new ObjectId(id));
+
+    return db
+        .collection(COLLECTIONS.PRODUCTS)
+        .find({
+            _id: { $in: objectIds },
+            isActive: true,
+        })
+        .toArray();
+};
+
 const getRelatedProducts = async (id, limit = 3) => {
     const db = await getDatabase();
 

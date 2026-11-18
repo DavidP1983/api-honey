@@ -1,6 +1,7 @@
 import {
     getProductById,
     getProducts,
+    getProductsByIds,
     getRelatedProducts,
 } from '../repositories/product.repository.js';
 
@@ -12,8 +13,17 @@ const fetchProductById = async (id) => {
     return getProductById(id);
 };
 
+const fetchProductsByIds = async (productsIds) => {
+    return getProductsByIds(productsIds);
+};
+
 const fetchRelatedProducts = async (id, limit = 3) => {
     return getRelatedProducts(id, limit);
 };
 
-export { fetchProductById, fetchProducts, fetchRelatedProducts };
+export {
+    fetchProductById,
+    fetchProducts,
+    fetchProductsByIds,
+    fetchRelatedProducts,
+};
