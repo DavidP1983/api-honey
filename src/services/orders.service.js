@@ -1,10 +1,11 @@
 import { ObjectId } from 'mongodb';
 import { createHash } from 'node:crypto';
 import { COLLECTIONS } from '../config/collections.js';
-import { getDatabase } from '../config/mongodb.js';
+import { getClient, getDatabase } from '../config/mongodb.js';
 import { createOrder } from '../repositories/orders.repository.js';
 import { orderCalculations } from '../utils/order-calculations.js';
 import { roundMoney } from '../utils/roundMoney.js';
+import { reserveProductStock } from './inventory.service.js';
 import { sendOrderEmails } from './order-email.service.js';
 
 export const createOrderService = async ({
@@ -43,7 +44,6 @@ export const createOrderService = async ({
 
     /* Получение продукта */
     const productsCollection = db.collection(COLLECTIONS.PRODUCTS);
-
     const orderItems = [];
 
     /* Проверка данных продукта на текущее состояние на их валидность */
@@ -150,8 +150,25 @@ export const createOrderService = async ({
         updatedAt: now,
     };
 
+    let session;
+    let order;
+
     try {
-        const order = await createOrder(orderData);
+        /* Создаем транзакцию для нескольких операций а именно вычисление и сохранение*/
+        const client = await getClient();
+        session = client.startSession();
+
+        await session.withTransaction(async () => {
+            for (const item of orderItems) {
+                await reserveProductStock({
+                    productsCollection,
+                    item,
+                    session,
+                });
+            }
+            order = await createOrder(orderData, session);
+        });
+
         await sendOrderEmails(order);
 
         return {
@@ -185,5 +202,9 @@ export const createOrderService = async ({
         }
 
         throw error;
+    } finally {
+        if (session) {
+            await session.endSession();
+        }
     }
 };

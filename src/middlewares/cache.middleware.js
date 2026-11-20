@@ -32,7 +32,7 @@ export const cacheResponse = (keyGenerator, ttl) => {
                 return originalJson(data);
             };
             next();
-        } catch (e) {
+        } catch (error) {
             console.error('Redis error:', error);
             next();
         }

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import backInStock from './backInStock.routes.js';
 import categoryRoutes from './category.routes.js';
 import deliveryRoutes from './delivery.routes.js';
 import ordersRoutes from './orders.routes.js';
@@ -15,5 +16,6 @@ router.use(productReviewsRoutes);
 router.use(ordersRoutes);
 router.use(deliveryRoutes);
 router.use(ticketsRoutes);
+router.use(backInStock);
 
 export default router;

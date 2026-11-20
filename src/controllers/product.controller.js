@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { toWishlistProductDto } from '../dtos/productWishlist.dto.js';
+import { backInStockNotification } from '../services/backInStockNotification.service.js';
 import {
     fetchProductById,
     fetchProducts,
@@ -19,7 +20,10 @@ const getProducts = async (req, res) => {
             products = await fetchProducts();
         }
 
-        res.status(200).json(products);
+        /*Временное размещение вызова до момента реализации seller-admin*/
+        await backInStockNotification(products);
+
+        return res.status(200).json(products);
     } catch (error) {
         res.status(500).json({
             code: 'PRODUCTS_FETCH_FAILED',

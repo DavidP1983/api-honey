@@ -4,4 +4,5 @@ export const COLLECTIONS = {
     REVIEWS: 'reviews',
     ORDERS: 'orders',
     TICKETS: 'tickets',
+    BACK_IN_STOCK_SUBSCRIPTIONS: 'backInStock',
 };

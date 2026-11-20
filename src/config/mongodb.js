@@ -21,3 +21,7 @@ export const getDatabase = async () => {
 
     return client.db('honey-platform');
 };
+
+export const getClient = async () => {
+    return await clientPromise;
+};
